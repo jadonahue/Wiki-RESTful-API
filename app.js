@@ -45,39 +45,36 @@ const Article = mongoose.model(
   articleSchema
 );
 
-// GET articles using async/await function. Try/Catch any errors.
-app.get("/articles", async function (req, res) {
-  try {
-    const articles = await Article.find({});
-    res.send(articles);
-  } catch (error) {
-    res.send(error);
-  }
-});
-
-// POST articles using async/await function. Try/Catch any errors.
-app.post("/articles", async function (req, res) {
-  try {
-    const newArticle = new Article({
-      title: req.body.title,
-      content: req.body.content
-    });
-    await newArticle.save();
-    res.send("Successfully added a new article.");
-  } catch (error) {
-    res.send(error);
-  }
-});
-
-// DELETE all articles using asycn function. Try/Catch any errors.
-app.delete("/articles", async function (req, res) {
-  try {
-    await Article.deleteMany({});
-    res.send("Successfully deleted all articles.");
-  } catch (error) {
-    res.send(error);
-  }
-});
+// ROUTE for /articles with GET, POST, DELETE, using async/await function. Try/Catch any errors.
+app.route("/articles")
+  .get(async (req, res) => {
+    try {
+      const articles = await Article.find({});
+      res.send(articles);
+    } catch (error) {
+      res.send(error);
+    }
+  })
+  .post(async (req, res) => {
+    try {
+      const newArticle = new Article({
+        title: req.body.title,
+        content: req.body.content
+      });
+      await newArticle.save();
+      res.send("Successfully added a new article.");
+    } catch (error) {
+      res.send(error);
+    }
+  })
+  .delete(async (req, res) => {
+    try {
+      await Article.deleteMany({});
+      res.send("Successfully deleted all articles.");
+    } catch (error) {
+      res.send(error);
+    }
+  });
 
 // Listen and respond when successfully connected to port.
 app.listen(port, function () {
