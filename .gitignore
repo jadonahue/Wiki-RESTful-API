@@ -1,0 +1,12 @@
+# This is local customization info
+.DS_Store
+
+# Node Modules
+node_modules/
+
+# This stores the personal users password for Atlas DB.
+.env
+/*.env
+
+# NPM debug log
+npm-debug.log
