@@ -62,7 +62,6 @@ app.post("/articles", async function (req, res) {
       title: req.body.title,
       content: req.body.content
     });
-
     await newArticle.save();
     res.send("Successfully added a new article.");
   } catch (error) {
