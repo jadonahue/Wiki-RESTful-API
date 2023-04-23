@@ -21,8 +21,8 @@ const atlasDBInfo = process.env.ATLAS_KEY_INFO;
 app.set('view engine', 'ejs');
 
 // This sets up body-parser for use.
-app.use(bodyParser.urlencoded({ 
-  extended: true 
+app.use(bodyParser.urlencoded({
+  extended: true
 }));
 
 // This serves static files in public folder.
@@ -45,45 +45,40 @@ const Article = mongoose.model(
   articleSchema
 );
 
-// GET articles using async/await function. Catch any errors.
-app.get("/articles", async function (req, res){
-
+// GET articles using async/await function. Try/Catch any errors.
+app.get("/articles", async function (req, res) {
   try {
     const articles = await Article.find({});
     res.send(articles);
   } catch (error) {
     res.send(error);
   }
-
 });
 
-// POST articles using async/await function. Catch any errors.
-app.post("/articles", async function (req, res){
-
+// POST articles using async/await function. Try/Catch any errors.
+app.post("/articles", async function (req, res) {
   try {
-    const newArticle = new Article ({
-      title:req.body.title,
-      content:req.body.content
+    const newArticle = new Article({
+      title: req.body.title,
+      content: req.body.content
     });
 
-     await newArticle.save()
-    .then(function (success) {
-      res.send("Successfully added a new article.");
-    })
+    await newArticle.save();
+    res.send("Successfully added a new article.");
   } catch (error) {
     res.send(error);
   }
-
 });
 
-// DELETE all articles using asycn function.
-// app.delete("/articles", async function (req, res){
-//   try {
-//     await Article.deleteMany({});
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
+// DELETE all articles using asycn function. Try/Catch any errors.
+app.delete("/articles", async function (req, res) {
+  try {
+    await Article.deleteMany({});
+    res.send("Successfully deleted all articles.");
+  } catch (error) {
+    res.send(error);
+  }
+});
 
 // Listen and respond when successfully connected to port.
 app.listen(port, function () {
