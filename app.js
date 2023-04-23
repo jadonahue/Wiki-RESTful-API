@@ -33,33 +33,31 @@ app.use(express.static("public"));
 mongoose.connect("mongodb://localhost:27017/wikiDB")
 // mongoose.connect(atlasDBInfo + "wikiDB")
 
-// Create new Schema
+// Create new SCHEMA
 const articleSchema = {
   title: String,
   content: String
 };
 
-// Create new Model (Mongoose will automatically make "Article" plural in mongoDB.)
+// Create new MODEL (Mongoose will automatically make "Article" plural in mongoDB.)
 const Article = mongoose.model(
   "Article",
   articleSchema
 );
 
-// Get articles using async/await function. Catch any errors.
+// GET articles using async/await function. Catch any errors.
 app.get("/articles", async function (req, res){
 
   try {
     const articles = await Article.find({});
     res.send(articles);
-  }
-
-  catch (err) {
-    console.log(err);
+  } catch (error) {
+    res.send(error);
   }
 
 });
 
-// Post articles using async function. Catch any errors.
+// POST articles using async/await function. Catch any errors.
 app.post("/articles", async function (req, res){
 
   try {
@@ -68,20 +66,24 @@ app.post("/articles", async function (req, res){
       content:req.body.content
     });
 
-    newArticle.save()
+     await newArticle.save()
     .then(function (success) {
-      console.log("Successfully added a new article.");
+      res.send("Successfully added a new article.");
     })
-    .catch(function (err) {
-      console.log(err);
-    });
-  }
-
-  catch (err) {
-    console.log(err);
+  } catch (error) {
+    res.send(error);
   }
 
 });
+
+// DELETE all articles using asycn function.
+// app.delete("/articles", async function (req, res){
+//   try {
+//     await Article.deleteMany({});
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
 
 // Listen and respond when successfully connected to port.
 app.listen(port, function () {
