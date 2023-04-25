@@ -45,7 +45,7 @@ const Article = mongoose.model(
   articleSchema
 );
 
-// ROUTE for /articles with GET, POST, DELETE, using async/await function. Try/Catch any errors.
+// ROUTE targeting ALL /articles with GET, POST, DELETE, using async/await function. Try/Catch any errors.
 app.route("/articles")
   .get(async (req, res) => {
     try {
@@ -71,6 +71,22 @@ app.route("/articles")
     try {
       await Article.deleteMany({});
       res.send("Successfully deleted all articles.");
+    } catch (error) {
+      res.send(error);
+    }
+  });
+
+// ROUTE targeting a SPECIFIC article
+
+app.route("/articles/:articleTitle")
+  .get(async (req, res) => {
+    try {
+      const foundArticle = await Article.findOne({title: req.params.articleTitle});
+      if (foundArticle) {
+        res.send(foundArticle);
+      } else {
+        res.send("No articles matching that specific title are found.");
+      }
     } catch (error) {
       res.send(error);
     }
