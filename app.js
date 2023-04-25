@@ -77,7 +77,6 @@ app.route("/articles")
   });
 
 // ROUTE targeting a SPECIFIC article.
-
 app.route("/articles/:articleTitle")
   .get(async (req, res) => {
     try {
@@ -94,11 +93,11 @@ app.route("/articles/:articleTitle")
   .put(async (req, res) => {
     try {
       await Article.replaceOne(
-        {title: req.params.articleTitle},
-        {title: req.body.title, content: req.body.content},
-        {overwrite: true}
-        );
-        res.send("Successfully updated the article.");
+        { title: req.params.articleTitle },
+        { title: req.body.title, content: req.body.content },
+        { overwrite: true }
+      );
+      res.send("Successfully updated the article.");
     } catch (error) {
       res.send(error)
     }
@@ -106,10 +105,10 @@ app.route("/articles/:articleTitle")
   .patch(async (req, res) => {
     try {
       await Article.updateOne(
-        {title: req.params.articleTitle},
-        {$set: req.body}
-        );
-        res.send("Successfully updated the article.");
+        { title: req.params.articleTitle },
+        { $set: req.body }
+      );
+      res.send("Successfully updated the article.");
     } catch (error) {
       res.send(error)
     }
@@ -117,9 +116,9 @@ app.route("/articles/:articleTitle")
   .delete(async (req, res) => {
     try {
       await Article.deleteOne(
-        {title: req.params.articleTitle},
-        );
-        res.send("Successfully deleted the article.");
+        { title: req.params.articleTitle },
+      );
+      res.send("Successfully deleted the article.");
     } catch (error) {
       res.send(error)
     }
