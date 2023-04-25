@@ -19,6 +19,8 @@ This is one route which targets all /articles with GET, POST, DELETE, using asyn
 
 You can create a .env file based on the env_sample. Here you can store personal information for your database/account info.
 
+---
+
 ### Postman
 Postman is a tool I used to test the functionality locally. With this you can test GET, POST, PUT, PATCH, and DELETE routes.
 
