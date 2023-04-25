@@ -45,7 +45,7 @@ const Article = mongoose.model(
   articleSchema
 );
 
-// ROUTE targeting ALL /articles with GET, POST, DELETE, using async/await function. Try/Catch any errors.
+// ROUTE targeting ALL /articles.
 app.route("/articles")
   .get(async (req, res) => {
     try {
@@ -76,7 +76,7 @@ app.route("/articles")
     }
   });
 
-// ROUTE targeting a SPECIFIC article
+// ROUTE targeting a SPECIFIC article.
 
 app.route("/articles/:articleTitle")
   .get(async (req, res) => {
