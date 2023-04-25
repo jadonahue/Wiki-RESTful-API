@@ -16,7 +16,7 @@ if (port == null || port == "") {
 require('dotenv').config()
 
 // Personal AtlasDB URL and User info in .env file.
-const atlasDBInfo = process.env.ATLAS_KEY_INFO;
+// const atlasDBInfo = process.env.ATLAS_KEY_INFO;
 
 app.set('view engine', 'ejs');
 
@@ -93,12 +93,33 @@ app.route("/articles/:articleTitle")
   })
   .put(async (req, res) => {
     try {
-      const foundArticle = await Article.replaceOne(
+      await Article.replaceOne(
         {title: req.params.articleTitle},
         {title: req.body.title, content: req.body.content},
         {overwrite: true}
         );
         res.send("Successfully updated the article.");
+    } catch (error) {
+      res.send(error)
+    }
+  })
+  .patch(async (req, res) => {
+    try {
+      await Article.updateOne(
+        {title: req.params.articleTitle},
+        {$set: req.body}
+        );
+        res.send("Successfully updated the article.");
+    } catch (error) {
+      res.send(error)
+    }
+  })
+  .delete(async (req, res) => {
+    try {
+      await Article.deleteOne(
+        {title: req.params.articleTitle},
+        );
+        res.send("Successfully deleted the article.");
     } catch (error) {
       res.send(error)
     }
